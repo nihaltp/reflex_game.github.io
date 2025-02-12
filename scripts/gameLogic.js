@@ -25,7 +25,13 @@ function updateScores() {
 
 export function sortScores() {
     const validScores = scores.filter(score => !isNaN(score));
-    validScores.sort((a, b) => a - b);
+    validScores.sort((a, b) => {
+        if (a >= 0 && b < 0) return -1;  // Keep the order
+        if (a < 0 && b >= 0) return 1;   // Flip the order
+        if (a < 0 && b < 0) return -1;   // Keep the order
+        return a - b;
+    });
+    
     /* Variables imported can only be read
     So we have to modify instead of reassigning */
     
